@@ -2,18 +2,6 @@
 
 # Introduction To LEMP Stack
 
-In project_2 LAMP Stack was implemented, in this project LEMP Stack will be implemented. Learners will understand more about web stack and what LEMP Stack is, its importane, and how it is different from LAMP Stack. As we move forward in this project, learners will learn  how to create and launch web applications using the LEMP stack.
-
-We’ll start by exploring the LEMP stack's architecture. Linux is the strong base, Nginx serves as the powerful web server, MySQL manages databases, and PHP gives life to your web applications by enabling server-side functionality.
-In this project, we will understand you more on ec2 instaces, improve the performance of Nginx, manage MySQL databases, and become skilled at developing PHP code for your applications. 
-
-When you finish the Project (LEMP Stack) Course, Get ready to use your imagination and start this exciting adventure with us.
-By the end of this project a task will be assigned which will be based on everything we has be done in this project. So let's  start 
-
-### What Is LEMP Stack ?
-
-From the last project, we understand what web stack is a collection of similar things or object (softwares) which work together in an interconnected way to run a function.
-
 The word LEMP refers to a group of open source software installed together which can be used to host web applications.
 ***LEMP*** meaning Linux; a unix operating system, Nginx; a web server capable of load balancing and can serve as a reverse proxy, Mysql; a database and PHP; an Hypertext preprocessor.
 
@@ -82,8 +70,7 @@ Let's get our hands on project LEMP
 
 #### Step 1: Launch an Ubuntu Instance on AWS Console and SSH Into From Your Terminal
 
-We were able to launch an ubuntu instance in the previous project, refer to step 1 of [LAMP_Stack_Implementation](https://github.com/RidwanAz/Darey.io_Devops_Project/blob/8a00946f1b768baaf0b2316f664fc828d1a4da4b/LAMP_Stack_Implementation/LAMP.md) for a guide to launch an instance and ssh into it.
-
+Launch an EC2 instance in AWS EC2 console
 #### Step 2: Installating Nginx
 update package lists and apt repositories
 
@@ -111,15 +98,10 @@ To access your web server on your browser
 
 
 The Nginx default page above will displayed. 
-You can check your ubuntu instance ip address from your aws console from the EC2 instance service management or input the command below
 
-    curl http://icanhazip.com
-or
-
-    curl -4 icanhazip.com 
 #### Step 3: Installating Mysql
 
-In the previous step, we were bale to install and allow firewall nginx. In this step, mysql will be installed as a database to store data for our web application.
+In the previous step, we were able to install and allow firewall nginx. In this step, mysql will be installed as a database to store data for our web application.
 apt repositories has been updated in the previous step, mysql should be installed directly
 
     sudo apt install mysql-server
@@ -150,31 +132,31 @@ Check for the successful installation of php
     php -v
 
 #### Step 5: Configuring Nginx Web Server To Serve As A Virtual Host 
-Create a directory for our codes to be hosted at the location "/var/www/html/darey.io", "darey.io" can be named any name. The directory will contain the php codes which nginx will serve. The codes are not limited to php codes but also html, css, javascript e.t.c. . Nginx web server is smart enough to know this location and serve it with the help of its configuration file.
+Create a directory for our codes to be hosted at the location "/var/www/html/website.", "website" can be named any name. The directory will contain the php codes which nginx will serve. The codes are not limited to php codes but also html, css, javascript e.t.c. . Nginx web server is smart enough to know this location and serve it with the help of its configuration file.
 
-    sudo mkdir /var/www/html/darey.io
+    sudo mkdir /var/www/html/website
 Create an simple html file which Nginx will serve
 
-    sudo nano /var/www/darey.io/index.html
+    sudo nano /var/www/html/website/index.html
 It should have the content below
 
 
-    <h1>Welcone to Darey.io, Nginx works</h1>
-darey.io is the directory created which will contain our php code
+    <h1>Testing LEMP, Nginx works</h1>
+website is the directory created which will contain our php code
 Assign ownership of the directory with the user
 
-    sudo chown -R $USER:$USER /var/www/html/darey.io
+    sudo chown -R $USER:$USER /var/www/html/website
 
 Create a new server block configuration that will replace nginx default server block configuration at /etc/nginx/sites-available
 
-    sudo nano /etc/nginx/sites-available/darey.io
+    sudo nano /etc/nginx/sites-available/azeez
 
-darey_io should contain the below
+azeez should contain the below
 
     server {
     listen 80;
     server_name ;
-    root /var/www/html/darey.io;
+    root /var/www/html/website;
 
     index index.html index.htm index.php;
 
@@ -196,7 +178,7 @@ To activate a server block, you create a symbolic link from the sites-enabled di
 
 Creating a symbolic link 
 
-    sudo ln -s /etc/nginx/sites-available/darey.io /etc/nginx/sites-enabled/
+    sudo ln -s /etc/nginx/sites-available/website /etc/nginx/sites-enabled/
 
 Unlinking the default server block configuration file from sites enables
 
@@ -220,9 +202,9 @@ Check your web browser.
 
 #### Step 6: Testing PHP with Nginx 
 
-Replace the index.html file in /var/www/html/darey.io with index.php with a simple php info.
+Replace the index.html file in /var/www/html/website/ with index.php with a simple php info.
 
-    sudo nano /var/www/darey.io/html/index.php
+    sudo nano /var/www/html/website/index.php
 Paste the contents below
 
     <?php
@@ -242,22 +224,22 @@ Log into mysql as root user
     sudo mysql 
 
 ***In the mysql shell***
-Create a database called darey_io
+Create a database called azeez
 
-    CREATE DATABASE darey_io;
+    CREATE DATABASE azeez;
 
-Create a new user called ***darey*** with password ***A different username or password can be used***
+Create a new user called ***my_user*** with password ***A different username or password can be used***
 
-    CREATE USER 'darey'@'%' IDENTIFIED WITH mysql_native_password BY 'Ab123456789';
-Grant 'darey' all permissions 
+    CREATE USER 'my_user'@'%' IDENTIFIED WITH mysql_native_password BY 'Ab123456789';
+Grant 'my_user' all permissions 
 
-    GRANT ALL ON root.* TO 'darey'@'%';
+    GRANT ALL ON root.* TO 'my_user'@'%';
 Log out of mysql
 
     exit
-Log in to mysql as user 'darey'
+Log in to mysql as user 'my_user'
 
-    mysql -u darey -p Aa123456789
+    mysql -u my_usr -p Aa123456789
 
 Checkout the database created as the root user
 
@@ -267,26 +249,26 @@ The output below will be printed
     +--------------------+
     | Database           |
     +--------------------+
-    | darey_io           |
+    | azeez              |
     | information_schema |
     +--------------------+
     2 rows in set (0.000 sec)
 Create a table called devops_list in the database created 
 
-    CREATE TABLE darey_io.devops_list (
+    CREATE TABLE azeez.devops_list (
 	item_id INT AUTO_INCREMENT,
 	content VARCHAR(255),
 	PRIMARY KEY(item_id)
     );
 Add a few lines to the list
 
-    INSERT INTO darey_io.devops_list (content) VALUES ("Linux needed for devops");
-    INSERT INTO darey_io.devops_list (content) VALUES ("Git needed for devops");
-    INSERT INTO darey_io.devops_list (content) VALUES ("LAMP needed for devops");
+    INSERT INTO azeez.devops_list (content) VALUES ("Linux needed for devops");
+    INSERT INTO azeez.devops_list (content) VALUES ("Git needed for devops");
+    INSERT INTO azeez.devops_list (content) VALUES ("LAMP needed for devops");
 
 Check that the lines have been successfully inputed
 
-    SELECT * FROM darey_io.devops_list;
+    SELECT * FROM azeez.devops_list;
 To output below will be shown 
 
     +---------+--------------------------+
@@ -305,9 +287,9 @@ In the /var/www/html we need to edit our index.php file
 Paste the content below 
 
     <?php
-    $user = "darey";
+    $user = "my_user";
     $password = "Ab123456789";
-    $database = "darey_io";
+    $database = "azeez";
     $table = "devops_list";
     
     try {
@@ -326,8 +308,11 @@ Check you web browser with your ubuntu instance ip address to see nginx serving 
 
 ## Task For This Project
 i. Launch an ubuntu instance and ssh into it.
+
 ii. Set up a LEMP Stack
+
 iii. Download a simple bootstrap code to host on your Stack. Use <wget https://github.com/startbootstrap/startbootstrap-agency/archive/gh-pages.zip>
+
 iv. unzip the folder host it on your LEMP Stack 
 
 ***Hint:*** unzip the folder with the command "unzip" if not installed, installed unzip with 
@@ -335,14 +320,3 @@ iv. unzip the folder host it on your LEMP Stack
 	sudo apt install unzip
  Then move the whole folder you unziped to your project folder and update the server block configuration file.
 
-
-# Real Life Scenarios With LEMP Stack
-
-A situation whereby you work for an e-commerce company which is experiencing rapid growth and needs to scale its online store infrastructure to handle increased traffic and ensure high availability during peak shopping seasons.
-
-As a DevOps engineers you can leverage the LEMP Stack to set up a scalable and high-performance e-commerce platform. You can use Nginx as a load balancer to distribute incoming traffic across multiple web server instances running PHP. MySQL databases are configured for replication to enhance redundancy and reliability. Additionally, they implement auto-scaling in the cloud to dynamically adjust server resources based on demand. This setup ensures seamless shopping experiences for customers, even during traffic spikes.
-
-# Conclusion
-
-In this project, we have been able to build a LEMP Stack,the LEMP Stack is a versatile and powerful technology stack that holds immense value for DevOps engineers and other technology professionals
-To deepen your understanding and proficiency in the LEMP Stack, learners are encouraged to keep practicing and explore further, experiment with different configurations, and apply your knowledge to real-world projects.
